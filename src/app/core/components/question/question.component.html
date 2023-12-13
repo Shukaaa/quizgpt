@@ -1,0 +1,8 @@
+<section>
+  <h1>{{question.question}}</h1>
+  <ul>
+    <li *ngFor="let option of question.answerOptions" (click)="checkAnswer(option)">
+      {{option}}
+    </li>
+  </ul>
+</section>

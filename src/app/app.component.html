@@ -1,0 +1,15 @@
+<main id="ask-main">
+  <h1>quiz-gpt</h1>
+  <a (click)="openTopicDialog()" id="topic-text">Choose the topic for the quiz</a>
+</main>
+
+<section id="quiz-main">
+  <app-loader *ngIf="question === null && inGame"></app-loader>
+  <app-question *ngIf="question !== null && inGame" [question]="question" (answerIsCorrect)="validateAnswer($event)"></app-question>
+  <div *ngIf="looseScreen">
+    <h1>It's wrong :( Your score was {{score}}</h1>
+    <a (click)="restart()">Click here to restart</a>
+  </div>
+</section>
+
+<app-topic-dialog (submitEvent)="submitTopic($event)"></app-topic-dialog>
