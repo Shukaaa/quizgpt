@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500&display=swap');
 @import "variables";
+@import 'highlight.js/styles/github.css';
 
 * {
   margin: 0;
@@ -31,4 +32,13 @@ a {
   &:visited {
     color: inherit;
   }
+}
+
+code {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.4rem;
+  background-color: $light-bg !important;
+  padding: 0.2rem;
+  border-radius: 0.2rem;
+  box-shadow: 0 0 0 1px $dark-color;
 }

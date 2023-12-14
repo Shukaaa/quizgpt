@@ -24,9 +24,11 @@ export class AppComponent {
   }
 
   startGame() {
-    this.quizService.subscribe(this.onQuestion.bind(this))
     this.looseScreen = false
+    this.inGame = true
     this.score = 0
+
+    this.quizService.subscribe(this.onQuestion.bind(this))
 
     let topicInput = document.getElementById("input-topic")
     if (topicInput && topicInput.tagName == "INPUT") {
@@ -38,19 +40,11 @@ export class AppComponent {
       this.model = (modelSelect as HTMLSelectElement).value as AllowedModels
     }
 
-    let inputs = document.getElementById("inputs")
-    if (inputs) {
-      inputs.style.display = "none"
-    }
-
-    let information = document.getElementById("information")
-    if (information) {
-      information.style.display = "block"
-    }
+    this.displayInputs("none")
+    this.displayInformation("block")
 
     document.getElementById("ask-main")?.classList.add("top")
 
-    this.inGame = true
     this.triggerNewQuestion()
   }
 
@@ -70,12 +64,6 @@ export class AppComponent {
 
     this.inGame = false
     this.looseScreen = true
-
-    let topicText = document.getElementById("topic-text")
-
-    if (topicText) {
-      topicText.innerHTML = "change topic"
-    }
   }
 
   restart() {
@@ -83,22 +71,28 @@ export class AppComponent {
   }
 
   reset() {
-    this.inGame = false
     this.looseScreen = false
     this.score = 0
     this.topic = ""
     this.question = null
 
-    let inputs = document.getElementById("inputs")
-    if (inputs) {
-      inputs.style.display = "block"
-    }
-
-    let information = document.getElementById("information")
-    if (information) {
-      information.style.display = "none"
-    }
+    this.displayInputs("block")
+    this.displayInformation("none")
 
     document.getElementById("ask-main")?.classList.remove("top")
+  }
+
+  displayInputs(type: string) {
+    let inputs = document.getElementById("inputs")
+    if (inputs) {
+      inputs.style.display = type
+    }
+  }
+
+  displayInformation(type: string) {
+    let information = document.getElementById("information")
+    if (information) {
+      information.style.display = type
+    }
   }
 }

@@ -1,5 +1,8 @@
 <section>
   <h1>{{question.question}}</h1>
+  <pre *ngIf="question.code !== null">
+    <code [highlight]="question.code"></code>
+  </pre>
   <ul>
     <li *ngFor="let option of question.answerOptions" (click)="checkAnswer(option)">
       {{option}}

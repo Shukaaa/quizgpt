@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import {QuizService} from "./core/service/QuizService";
 import { LoaderComponent } from './core/components/loader/loader.component';
 import { QuestionComponent } from './core/components/question/question.component';
+import {Highlight} from "ngx-highlightjs";
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { QuestionComponent } from './core/components/question/question.component
     QuestionComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    Highlight
   ],
   providers: [
     QuizService
