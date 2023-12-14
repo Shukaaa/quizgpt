@@ -1,7 +1,8 @@
 import {Injectable} from "@angular/core";
 import OpenAI from "openai";
-import {env} from "../../environment/env";
 import {Question} from "../types/question";
+import {environment} from "../../../environments/environment";
+import {AllowedModels} from "../types/allowed-models";
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +14,13 @@ export class QuizService {
 
   constructor() {
     this.openai = new OpenAI({
-      apiKey: env.apiKey, dangerouslyAllowBrowser: true
+      apiKey: environment.apiKey, dangerouslyAllowBrowser: true
     })
   }
 
-  triggerNewQuestion(topic: string) {
+  triggerNewQuestion(topic: string, model: AllowedModels) {
     this.openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: model,
       messages: [{
         role: 'user', content: this.generateQuestionPrompt(topic) }],
       }).then(r => {
@@ -34,7 +35,7 @@ export class QuizService {
 
   generateQuestionPrompt(topic: string): string {
     return 'Give me a random quiz question about the topic: ' + topic + '.' +
-      'Your response should only be an json object with the string question,' +
+      'Your response should ONLY be a json object with the string question,' +
       'and an array string with 4 answer options with the name "answerOptions"' +
       'and the last string with the correct answer (Every quiz can only have 1 answer!) with the name "correctAnswer".' +
       'Make sure to not ask following questions: ' + this.alreadyAskedQuestions.map(q => q.question).join(', ') + '.'

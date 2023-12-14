@@ -1,6 +1,22 @@
 <main id="ask-main">
   <h1>quiz-gpt</h1>
-  <a (click)="openTopicDialog()" id="topic-text">Choose the topic for the quiz</a>
+  <main id="inputs">
+    <label id="label-topic">Topic:</label>
+    <input type="text" placeholder="..." id="input-topic">
+    <label id="label-model">Model:</label>
+    <select id="select-model">
+      <option value="gpt-3.5-turbo" selected>gpt-3.5-turbo</option>
+      <option value="gpt-3.5-turbo-1106">gpt-3.5-turbo-1106</option>
+      <option value="gpt-4">gpt-4</option>
+      <option value="gpt-4-1106-preview">gpt-4-1106-preview</option>
+    </select>
+    <button (click)="startGame()">Start</button>
+  </main>
+  <main id="information" style="display: none">
+    <p>Topic: {{topic}}</p>
+    <p>Model: {{model}}</p>
+    <p>Score: {{score}}</p>
+  </main>
 </main>
 
 <section id="quiz-main">
@@ -8,8 +24,7 @@
   <app-question *ngIf="question !== null && inGame" [question]="question" (answerIsCorrect)="validateAnswer($event)"></app-question>
   <div *ngIf="looseScreen">
     <h1>It's wrong :( Your score was {{score}}</h1>
-    <a (click)="restart()">Click here to restart</a>
+    <a (click)="restart()">Restart same quiz</a> <br/>
+    <a (click)="reset()">Create new quiz</a>
   </div>
 </section>
-
-<app-topic-dialog (submitEvent)="submitTopic($event)"></app-topic-dialog>

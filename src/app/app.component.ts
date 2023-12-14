@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {QuizService} from "./core/service/QuizService";
 import {Question} from "./core/types/question";
+import {AllowedModels} from "./core/types/allowed-models";
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,7 @@ export class AppComponent {
   question: null | Question = null
   score = 0
   looseScreen = false
+  model: AllowedModels = "gpt-3.5-turbo"
 
   constructor(private quizService: QuizService) {}
 
@@ -21,18 +23,30 @@ export class AppComponent {
     this.question = question
   }
 
-  submitTopic(event: string) {
+  startGame() {
     this.quizService.subscribe(this.onQuestion.bind(this))
-    this.topic = event
     this.looseScreen = false
+    this.score = 0
 
-    let topicDialog = document.getElementById("topic-dialog")
-
-    if (topicDialog) {
-      topicDialog.style.display = "none"
+    let topicInput = document.getElementById("input-topic")
+    if (topicInput && topicInput.tagName == "INPUT") {
+      this.topic = (topicInput as HTMLInputElement).value
     }
 
-    this.setTopicTextWithScore()
+    let modelSelect = document.getElementById("select-model")
+    if (modelSelect && modelSelect.tagName == "SELECT") {
+      this.model = (modelSelect as HTMLSelectElement).value as AllowedModels
+    }
+
+    let inputs = document.getElementById("inputs")
+    if (inputs) {
+      inputs.style.display = "none"
+    }
+
+    let information = document.getElementById("information")
+    if (information) {
+      information.style.display = "block"
+    }
 
     document.getElementById("ask-main")?.classList.add("top")
 
@@ -40,26 +54,8 @@ export class AppComponent {
     this.triggerNewQuestion()
   }
 
-  setTopicTextWithScore() {
-    let topicText = document.getElementById("topic-text")
-
-    if (topicText) {
-      topicText.innerHTML = this.topic + " - Score: " + this.score
-    }
-  }
-
   triggerNewQuestion() {
-    this.quizService.triggerNewQuestion(this.topic)
-  }
-
-  openTopicDialog() {
-    if (!this.inGame) {
-      let topicDialog = document.getElementById("topic-dialog")
-
-      if (topicDialog) {
-        topicDialog.style.display = "block"
-      }
-    }
+    this.quizService.triggerNewQuestion(this.topic, this.model)
   }
 
   validateAnswer(answer: boolean) {
@@ -68,7 +64,6 @@ export class AppComponent {
     if (answer) {
       this.score++
       this.triggerNewQuestion()
-      this.setTopicTextWithScore()
 
       return
     }
@@ -84,6 +79,26 @@ export class AppComponent {
   }
 
   restart() {
-    this.submitTopic(this.topic)
+    this.startGame()
+  }
+
+  reset() {
+    this.inGame = false
+    this.looseScreen = false
+    this.score = 0
+    this.topic = ""
+    this.question = null
+
+    let inputs = document.getElementById("inputs")
+    if (inputs) {
+      inputs.style.display = "block"
+    }
+
+    let information = document.getElementById("information")
+    if (information) {
+      information.style.display = "none"
+    }
+
+    document.getElementById("ask-main")?.classList.remove("top")
   }
 }

@@ -1,10 +1,10 @@
+@import "../variables";
+
 main {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  width: 100vw;
   font-size: 1.6rem;
 }
 
@@ -15,8 +15,12 @@ main {
   transform: translate(-50%, -50%);
 
   &.top {
-    top: 0;
-    transform: translate(-50%, -42.5%);
+    top: 75px;
+    transform: translate(-50%, -50%);
+  }
+
+  label {
+    font-size: 1.25rem;
   }
 
   transition: all 0.8s ease-in-out;
@@ -27,4 +31,26 @@ main {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+select, input, button {
+  font-size: 1.25rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid darken($light-bg, 15%);
+  margin: 0.5rem 0;
+  width: 100%;
+}
+
+button {
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    background-color: darken($light-bg, 15%);
+  }
+}
+
+p {
+  font-size: 1.25rem;
 }
