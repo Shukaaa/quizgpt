@@ -2,7 +2,7 @@
   <h1>quiz-gpt</h1>
   <main id="inputs">
     <label>Topic:</label>
-    <input type="text" placeholder="christmas" id="input-topic">
+    <input type="text" [placeholder]="randomTopicPlaceholder()" id="input-topic">
     <label>Model:</label>
     <select id="select-model">
       <option value="gpt-3.5-turbo" selected>gpt-3.5-turbo</option>
