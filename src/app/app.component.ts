@@ -15,6 +15,7 @@ export class AppComponent {
   score = 0
   looseScreen = false
   model: AllowedModels = "gpt-3.5-turbo"
+  apiSecret = ""
 
   constructor(private quizService: QuizService) {}
 
@@ -40,6 +41,11 @@ export class AppComponent {
       this.model = (modelSelect as HTMLSelectElement).value as AllowedModels
     }
 
+    let apiSecretInput = document.getElementById("input-api-secret")
+    if (apiSecretInput && apiSecretInput.tagName == "INPUT") {
+      this.apiSecret = (apiSecretInput as HTMLInputElement).value
+    }
+
     this.displayInputs("none")
     this.displayInformation("block")
 
@@ -49,7 +55,7 @@ export class AppComponent {
   }
 
   triggerNewQuestion() {
-    this.quizService.triggerNewQuestion(this.topic, this.model)
+    this.quizService.triggerNewQuestion(this.topic, this.model, this.apiSecret)
   }
 
   validateAnswer(answer: boolean) {
@@ -75,6 +81,8 @@ export class AppComponent {
     this.score = 0
     this.topic = ""
     this.question = null
+
+    this.quizService.clearAlreadyAskedQuestions()
 
     this.displayInputs("block")
     this.displayInformation("none")

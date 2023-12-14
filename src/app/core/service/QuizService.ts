@@ -1,29 +1,21 @@
 import {Injectable} from "@angular/core";
 import OpenAI from "openai";
 import {Question} from "../types/question";
-import {environment} from "../../../environments/environment";
 import {AllowedModels} from "../types/allowed-models";
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuizService {
-  openai: OpenAI;
   subscribedFunctions: ((question: Question) => void)[] = []
   alreadyAskedQuestions: Question[] = []
 
-  constructor() {
-    this.openai = new OpenAI({
-      apiKey: environment.apiKey, dangerouslyAllowBrowser: true
+  triggerNewQuestion(topic: string, model: AllowedModels, apiSecret: string) {
+    let openai = new OpenAI({
+      apiKey: apiSecret, dangerouslyAllowBrowser: true
     })
-  }
 
-  getQuestion(question: Question) {
-    console.log(question)
-  }
-
-  triggerNewQuestion(topic: string, model: AllowedModels) {
-    this.openai.chat.completions.create({
+    openai.chat.completions.create({
       model: model,
       messages: [{
         role: 'user', content: this.generateQuestionPrompt(topic)
@@ -35,6 +27,14 @@ export class QuizService {
         try {
           questionObject = JSON.parse(question) as Question
 
+          if (questionObject.code == "null") {
+            questionObject.code = null
+          }
+
+          if (questionObject.codeLanguage == "null") {
+            questionObject.codeLanguage = null
+          }
+
           if (questionObject.code !== null && questionObject.codeLanguage !== null) {
             questionObject.question = questionObject.question.replace(questionObject.code, '')
             questionObject.codeLanguage = questionObject.codeLanguage.toLowerCase()
@@ -43,7 +43,7 @@ export class QuizService {
           this.alreadyAskedQuestions.push(questionObject)
           this.subscribedFunctions.forEach(f => f(questionObject))
         } catch (e) {
-          this.triggerNewQuestion(topic, model)
+          this.triggerNewQuestion(topic, model, apiSecret)
         }
       }
     })
@@ -62,5 +62,9 @@ export class QuizService {
 
   subscribe(callback: (question: Question) => void) {
     this.subscribedFunctions.push(callback)
+  }
+
+  clearAlreadyAskedQuestions() {
+    this.alreadyAskedQuestions = []
   }
 }
