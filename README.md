@@ -8,6 +8,16 @@
 
 This is a simple quiz game that uses the OpenAI API to generate questions and answers using the ChatGPT models. The game is played by a user who can choose any topic they want. The user must select the correct answer to score a point. The game ends when the user selects an incorrect answer.
 
+## Screenshots
+
+![Screenshot 1](src/assets/example1.png)
+
+> Historical questions
+
+![Screenshot 2](src/assets/example2.png)
+
+> Pokemon 1st gen questions
+
 ## Installation
 
 You can install the project by cloning the repository and installing the dependencies or by using the Docker image.
