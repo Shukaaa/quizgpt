@@ -40,7 +40,7 @@ export class AppComponent {
   }
 
   triggerNewQuestion() {
-    this.quizService.triggerNewQuestion(this.settings.topic, this.settings.model, this.settings.apiSecret)
+    this.quizService.triggerNewQuestion(this.settings)
   }
 
   validateAnswer(answer: boolean) {

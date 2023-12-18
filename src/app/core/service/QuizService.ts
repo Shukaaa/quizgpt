@@ -1,7 +1,9 @@
 import {Injectable} from "@angular/core";
 import OpenAI from "openai";
 import {Question} from "../types/question";
-import {AllowedModels} from "../types/allowed-models";
+import {Chat} from "openai/resources";
+import ChatCompletion = Chat.ChatCompletion;
+import {QuizSettings} from "../types/settings";
 
 @Injectable({
   providedIn: 'root'
@@ -10,43 +12,46 @@ export class QuizService {
   subscribedFunctions: ((question: Question) => void)[] = []
   alreadyAskedQuestions: Question[] = []
 
-  triggerNewQuestion(topic: string, model: AllowedModels, apiSecret: string) {
+  triggerNewQuestion(settings: QuizSettings) {
     let openai = new OpenAI({
-      apiKey: apiSecret, dangerouslyAllowBrowser: true
+      apiKey: settings.apiSecret, dangerouslyAllowBrowser: true
     })
 
     openai.chat.completions.create({
-      model: model,
+      model: settings.model,
       messages: [{
-        role: 'user', content: this.generateQuestionPrompt(topic)
+        role: 'user', content: this.generateQuestionPrompt(settings.topic)
       }]
-      }).then(r => {
-      let question = r.choices[0].message.content
-      if (question != null) {
-        let questionObject: Question
-        try {
-          questionObject = JSON.parse(question) as Question
+    }).then((response) => this.onQuestion(response, settings))
+  }
 
-          if (questionObject.code == "null") {
-            questionObject.code = null
-          }
+  onQuestion(response: ChatCompletion, settings: QuizSettings) {
+    let question = response.choices[0].message.content
 
-          if (questionObject.codeLanguage == "null") {
-            questionObject.codeLanguage = null
-          }
+    if (question != null) {
+      let questionObject: Question
+      try {
+        questionObject = JSON.parse(question) as Question
 
-          if (questionObject.code !== null && questionObject.codeLanguage !== null) {
-            questionObject.question = questionObject.question.replace(questionObject.code, '')
-            questionObject.codeLanguage = questionObject.codeLanguage.toLowerCase()
-          }
-
-          this.alreadyAskedQuestions.push(questionObject)
-          this.subscribedFunctions.forEach(f => f(questionObject))
-        } catch (e) {
-          this.triggerNewQuestion(topic, model, apiSecret)
+        if (questionObject.code == "null") {
+          questionObject.code = null
         }
+
+        if (questionObject.codeLanguage == "null") {
+          questionObject.codeLanguage = null
+        }
+
+        if (questionObject.code !== null && questionObject.codeLanguage !== null) {
+          questionObject.question = questionObject.question.replace(questionObject.code, '')
+          questionObject.codeLanguage = questionObject.codeLanguage.toLowerCase()
+        }
+
+        this.alreadyAskedQuestions.push(questionObject)
+        this.subscribedFunctions.forEach(f => f(questionObject))
+      } catch (e) {
+        this.triggerNewQuestion(settings)
       }
-    })
+    }
   }
 
   generateQuestionPrompt(topic: string): string {
