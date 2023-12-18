@@ -1,8 +1,7 @@
 import {Component} from '@angular/core';
 import {QuizService} from "./core/service/QuizService";
 import {Question} from "./core/types/question";
-import {AllowedModels} from "./core/types/allowed-models";
-import {quizTopics} from "./core/static/topics";
+import {QuizSettings} from "./core/types/settings";
 
 @Component({
   selector: 'app-root',
@@ -10,19 +9,22 @@ import {quizTopics} from "./core/static/topics";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  topic = ""
   inGame = false
   question: null | Question = null
   score = 0
   looseScreen = false
-  model: AllowedModels = "gpt-3.5-turbo"
-  apiSecret = ""
+  settings: QuizSettings = {topic: "", model: "gpt-3.5-turbo", apiSecret: ""}
 
   constructor(private quizService: QuizService) {}
 
   onQuestion(question: Question) {
     console.log(question)
     this.question = question
+  }
+
+  onStart(settings: any) {
+    this.settings = settings
+    this.startGame()
   }
 
   startGame() {
@@ -32,31 +34,13 @@ export class AppComponent {
 
     this.quizService.subscribe(this.onQuestion.bind(this))
 
-    let topicInput = document.getElementById("input-topic")
-    if (topicInput && topicInput.tagName == "INPUT") {
-      this.topic = (topicInput as HTMLInputElement).value
-    }
-
-    let modelSelect = document.getElementById("select-model")
-    if (modelSelect && modelSelect.tagName == "SELECT") {
-      this.model = (modelSelect as HTMLSelectElement).value as AllowedModels
-    }
-
-    let apiSecretInput = document.getElementById("input-api-secret")
-    if (apiSecretInput && apiSecretInput.tagName == "INPUT") {
-      this.apiSecret = (apiSecretInput as HTMLInputElement).value
-    }
-
-    this.displayInputs("none")
-    this.displayInformation("block")
-
     document.getElementById("ask-main")?.classList.add("top")
 
     this.triggerNewQuestion()
   }
 
   triggerNewQuestion() {
-    this.quizService.triggerNewQuestion(this.topic, this.model, this.apiSecret)
+    this.quizService.triggerNewQuestion(this.settings.topic, this.settings.model, this.settings.apiSecret)
   }
 
   validateAnswer(answer: boolean) {
@@ -80,32 +64,9 @@ export class AppComponent {
   reset() {
     this.looseScreen = false
     this.score = 0
-    this.topic = ""
-    this.question = null
 
     this.quizService.clearAlreadyAskedQuestions()
 
-    this.displayInputs("block")
-    this.displayInformation("none")
-
     document.getElementById("ask-main")?.classList.remove("top")
-  }
-
-  displayInputs(type: string) {
-    let inputs = document.getElementById("inputs")
-    if (inputs) {
-      inputs.style.display = type
-    }
-  }
-
-  displayInformation(type: string) {
-    let information = document.getElementById("information")
-    if (information) {
-      information.style.display = type
-    }
-  }
-
-  randomTopicPlaceholder() {
-    return quizTopics[Math.floor(Math.random() * quizTopics.length)].toLowerCase()
   }
 }

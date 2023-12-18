@@ -1,22 +1,9 @@
 <main id="ask-main">
   <h1>quiz-gpt</h1>
-  <main id="inputs">
-    <label>Topic:</label>
-    <input type="text" [placeholder]="randomTopicPlaceholder()" id="input-topic">
-    <label>Model:</label>
-    <select id="select-model">
-      <option value="gpt-3.5-turbo" selected>gpt-3.5-turbo</option>
-      <option value="gpt-3.5-turbo-1106">gpt-3.5-turbo-1106</option>
-      <option value="gpt-4">gpt-4</option>
-      <option value="gpt-4-1106-preview">gpt-4-1106-preview</option>
-    </select>
-    <label>API Secret:</label>
-    <input type="password" placeholder="***" id="input-api-secret">
-    <button (click)="startGame()">Start</button>
-  </main>
-  <main id="information" style="display: none">
-    <p>Topic: {{topic}}</p>
-    <p>Model: {{model}}</p>
+  <app-game-inputs id="inputs" (onStart)="onStart($event)" *ngIf="!inGame && !looseScreen"></app-game-inputs>
+  <main *ngIf="inGame || looseScreen">
+    <p>Topic: {{settings.topic}}</p>
+    <p>Model: {{settings.model}}</p>
     <p>Score: {{score}}</p>
   </main>
 </main>
