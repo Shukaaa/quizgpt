@@ -10,11 +10,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-<<<<<<< HEAD
           node-version: 'latest'
-=======
-          node-version: '17'
->>>>>>> 07c696a1c7edd3b9f78a75b024a29c7e168ac4aa
       - run: npm install
       - run: npm run build
       - name: Login to Docker Hub
