@@ -1,4 +1,4 @@
-🧐 quizgpt 🧐
+# 🧐 quizgpt 🧐
 
 ![Logo](src/assets/icon.png)
 
@@ -10,13 +10,13 @@ This is a simple quiz game that uses the OpenAI API to generate questions and an
 
 ## Screenshots
 
-![Screenshot 1](src/assets/example1.png)
+![Start-Screen](src/assets/start.png)
+
+> Main menu
+
+![Screenshot 1](src/assets/example.png)
 
 > Historical questions
-
-![Screenshot 2](src/assets/example2.png)
-
-> Pokemon 1st gen questions
 
 ## Installation
 
