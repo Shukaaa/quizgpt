@@ -11,6 +11,8 @@ import {QuizSettings} from "../../types/settings";
 export class GameInputsComponent {
   @Output() onStart: EventEmitter<QuizSettings> = new EventEmitter<QuizSettings>()
 
+  placeholder = this.randomTopicPlaceholder()
+
   randomTopicPlaceholder() {
     return quizTopics[Math.floor(Math.random() * quizTopics.length)].toLowerCase()
   }
