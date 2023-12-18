@@ -42,3 +42,25 @@ code {
   border-radius: 0.2rem;
   box-shadow: 0 0 0 1px $dark-color;
 }
+
+select, input, button {
+  font-size: 1.25rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid darken($light-bg, 15%);
+  margin: 0.5rem 0;
+  width: 100%;
+}
+
+button {
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    background-color: darken($light-bg, 15%);
+  }
+}
+
+p {
+  font-size: 1.25rem;
+}

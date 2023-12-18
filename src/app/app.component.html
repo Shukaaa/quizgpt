@@ -24,9 +24,5 @@
 <section id="quiz-main">
   <app-loader *ngIf="question === null && inGame"></app-loader>
   <app-question *ngIf="question !== null && inGame" [question]="question" (answerIsCorrect)="validateAnswer($event)"></app-question>
-  <div *ngIf="looseScreen" class="looseScreen">
-    <h1>It's wrong 😔 - Your score was {{score}}</h1>
-    <a (click)="restart()">Restart quiz</a> <br/>
-    <a (click)="reset()">Create new quiz</a>
-  </div>
+  <app-loose-screen *ngIf="looseScreen" (onReset)="reset()" (onRestart)="restart()" [score]="score"></app-loose-screen>
 </section>
