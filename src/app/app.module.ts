@@ -8,6 +8,7 @@ import { QuestionComponent } from './core/components/question/question.component
 import {Highlight} from "ngx-highlightjs";
 import { LooseScreenComponent } from './core/components/loose-screen/loose-screen.component';
 import { GameInputsComponent } from './core/components/game-inputs/game-inputs.component';
+import { InformationListComponent } from './core/components/information-list/information-list.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { GameInputsComponent } from './core/components/game-inputs/game-inputs.c
     LoaderComponent,
     QuestionComponent,
     LooseScreenComponent,
-    GameInputsComponent
+    GameInputsComponent,
+    InformationListComponent
   ],
   imports: [
     BrowserModule,

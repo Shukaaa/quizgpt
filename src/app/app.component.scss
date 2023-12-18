@@ -1,15 +1,7 @@
 @import "../variables";
 
-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.6rem;
-}
-
-#inputs {
-  width: 100%;
+h1 {
+  text-align: center;
 }
 
 #ask-main {
@@ -31,10 +23,6 @@ main {
   &.top {
     top: 75px;
     transform: translate(-50%, -50%);
-  }
-
-  label {
-    font-size: 1.25rem;
   }
 
   transition: all 0.8s ease-in-out;

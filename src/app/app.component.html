@@ -1,15 +1,30 @@
-<main id="ask-main">
+<section id="ask-main">
   <h1>quiz-gpt</h1>
-  <app-game-inputs id="inputs" (onStart)="onStart($event)" *ngIf="!inGame && !looseScreen"></app-game-inputs>
-  <main *ngIf="inGame || looseScreen">
-    <p>Topic: {{settings.topic}}</p>
-    <p>Model: {{settings.model}}</p>
-    <p>Score: {{score}}</p>
-  </main>
-</main>
+  <app-game-inputs
+    (onStart)="onStart($event)"
+    *ngIf="!inGame && !looseScreen">
+  </app-game-inputs>
+  <app-information-list
+    *ngIf="inGame || looseScreen"
+    [topic]="settings.topic"
+    [model]="settings.model"
+    [score]="score">
+  </app-information-list>
+</section>
 
 <section id="quiz-main">
-  <app-loader *ngIf="question === null && inGame"></app-loader>
-  <app-question *ngIf="question !== null && inGame" [question]="question" (answerIsCorrect)="validateAnswer($event)"></app-question>
-  <app-loose-screen *ngIf="looseScreen" (onReset)="reset()" (onRestart)="restart()" [score]="score"></app-loose-screen>
+  <app-loader
+    *ngIf="question === null && inGame">
+  </app-loader>
+  <app-question
+    *ngIf="question !== null && inGame"
+    [question]="question"
+    (answerIsCorrect)="validateAnswer($event)">
+  </app-question>
+  <app-loose-screen
+    *ngIf="looseScreen"
+    (onReset)="reset()"
+    (onRestart)="restart()"
+    [score]="score">
+  </app-loose-screen>
 </section>
