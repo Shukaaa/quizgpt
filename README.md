@@ -1,4 +1,6 @@
-![Logo](src/assets/title.png)
+🧐 quizgpt 🧐
+
+![Logo](src/assets/icon.png)
 
 > First thing first, this is a just for fun project. It's not meant to be as polished and as good as a real game and may have some bugs or stupid code. I'm not a professional developer, and I'm still learning. I'm open to any suggestions, improvements and feedback.
 
@@ -47,5 +49,3 @@ docker run -d -p 4200:80 --name quiz-gpt shukaaa/quizzgpt:latest
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-![Logo](src/assets/title.png)
