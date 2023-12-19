@@ -45,7 +45,7 @@ npm start
 ### Using the Docker image
 
 ```bash
-docker run -d -p 4200:80 --name quiz-gpt shukaaa/quizzgpt:latest
+docker run -d -p 4200:80 --name quiz-gpt shukaaa/quizgpt:latest
 ```
 
 ## Usage
