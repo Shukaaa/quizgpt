@@ -9,6 +9,7 @@ import {Highlight, HIGHLIGHT_OPTIONS} from "ngx-highlightjs";
 import { LooseScreenComponent } from './core/components/loose-screen/loose-screen.component';
 import { GameInputsComponent } from './core/components/game-inputs/game-inputs.component';
 import { InformationListComponent } from './core/components/information-list/information-list.component';
+import { ThemeSwitchComponent } from './core/components/theme-switch/theme-switch.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { InformationListComponent } from './core/components/information-list/inf
     QuestionComponent,
     LooseScreenComponent,
     GameInputsComponent,
-    InformationListComponent
+    InformationListComponent,
+    ThemeSwitchComponent
   ],
   imports: [
     BrowserModule,

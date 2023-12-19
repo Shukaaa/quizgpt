@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {AfterViewInit, Component} from '@angular/core';
 import {QuizService} from "./core/service/QuizService";
 import {Question} from "./core/types/question";
 import {QuizSettings} from "./core/types/settings";
@@ -8,7 +8,7 @@ import {QuizSettings} from "./core/types/settings";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
   inGame = false
   question: null | Question = null
   score = 0
@@ -16,6 +16,10 @@ export class AppComponent {
   settings: QuizSettings = {topic: "", model: "gpt-3.5-turbo", apiSecret: ""}
 
   constructor(private quizService: QuizService) {}
+
+  ngAfterViewInit() {
+    //document.documentElement.setAttribute('data-theme', 'dark');
+  }
 
   onQuestion(question: Question) {
     console.log(question)
