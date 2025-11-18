@@ -1,11 +1,12 @@
 <label>Topic:</label>
 <input type="text" [placeholder]="placeholder" id="input-topic">
+
 <label>Model:</label>
-<select id="select-model">
-  <option value="gpt-3.5-turbo" selected>gpt-3.5-turbo</option>
-  <option value="gpt-3.5-turbo-1106">gpt-3.5-turbo-1106</option>
-  <option value="gpt-4">gpt-4</option>
-</select>
+<input type="text" placeholder="Model" id="input-model" value="gpt-3.5-turbo">
+<p class="hint">
+  <span>See </span> <a href="https://platform.openai.com/docs/models" target="_blank" rel="noopener noreferrer">all available models</a>
+</p>
+
 <label>API Secret:</label>
-<input type="password" placeholder="***" id="input-api-secret">
+<input type="password" placeholder="sk-***" id="input-api-secret">
 <button (click)="startGame()">Start</button>

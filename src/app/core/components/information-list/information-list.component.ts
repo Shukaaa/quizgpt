@@ -1,5 +1,4 @@
 import {Component, Input} from '@angular/core';
-import {AllowedModels} from "../../types/allowed-models";
 
 @Component({
   selector: 'app-information-list',
@@ -8,6 +7,6 @@ import {AllowedModels} from "../../types/allowed-models";
 })
 export class InformationListComponent {
   @Input() topic: string = ""
-  @Input() model: AllowedModels = "gpt-3.5-turbo"
+  @Input() model: string = "gpt-3.5-turbo"
   @Input() score: number = 0
 }

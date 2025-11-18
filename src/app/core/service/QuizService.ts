@@ -12,6 +12,14 @@ export class QuizService {
   subscribedFunctions: ((question: Question) => void)[] = []
   alreadyAskedQuestions: Question[] = []
 
+  fetchAllModels(settings: QuizSettings) {
+    let openai = new OpenAI({
+      apiKey: settings.apiSecret, dangerouslyAllowBrowser: true
+    })
+
+    openai.models.list().then(response => console.log(response))
+  }
+
   triggerNewQuestion(settings: QuizSettings) {
     let openai = new OpenAI({
       apiKey: settings.apiSecret, dangerouslyAllowBrowser: true

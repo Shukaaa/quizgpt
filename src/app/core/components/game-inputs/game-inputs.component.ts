@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {quizTopics} from "../../static/topics";
-import {AllowedModels} from "../../types/allowed-models";
 import {QuizSettings} from "../../types/settings";
 
 @Component({
@@ -19,7 +18,7 @@ export class GameInputsComponent {
 
   startGame() {
     let topic = ""
-    let model: AllowedModels = "gpt-3.5-turbo"
+    let model: string = "gpt-3.5-turbo"
     let apiSecret = ""
 
     let topicInput = document.getElementById("input-topic")
@@ -27,9 +26,9 @@ export class GameInputsComponent {
       topic = (topicInput as HTMLInputElement).value
     }
 
-    let modelSelect = document.getElementById("select-model")
-    if (modelSelect && modelSelect.tagName == "SELECT") {
-      model = (modelSelect as HTMLSelectElement).value as AllowedModels
+    let modelInput = document.getElementById("input-model")
+    if (modelInput && modelInput.tagName == "INPUT") {
+      model = (modelInput as HTMLInputElement).value
     }
 
     let apiSecretInput = document.getElementById("input-api-secret")
