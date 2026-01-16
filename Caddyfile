@@ -1,5 +1,5 @@
-localhost:80
+:80
 
-root * /app
-
+root * /app/dist/quizgpt
+encode gzip
 file_server
